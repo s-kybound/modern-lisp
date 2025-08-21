@@ -50,11 +50,11 @@ Had an internship at Ahrefs and loved OCaml.
 (* letrec exists too *)
 (letrec
   (even? n -> (match n
-                (Z -> True)
-                ((S x) -> (odd? x))))
+                (Z => True)
+                ((S x) => (odd? x))))
   (odd? n -> (match n
-               (Z -> False)
-               ((S x) -> (even? x)))))
+               (Z => False)
+               ((S x) => (even? x)))))
 (* wut *)
 (typerec
   (foo' (Foo [bar : bar']))
@@ -68,9 +68,11 @@ Had an internship at Ahrefs and loved OCaml.
 (* for let/rec EXPRESSIONS, we use a slightly different syntax *)
 (*
 definition: (let (<pattern> <val>)+ ) (* only top level! *)
-expression: (let (<pattern> <val>)+ -> <body> )
+expression: (let (<pattern> <val>)+ => <body> )
+
+(* we keep -> to represent functions and => to represent matches and progress *)
 *)
-(let (x 1) -> x)
+(let (x 1) => x)
 
 (even? (S Z))
 ```
