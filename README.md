@@ -1,7 +1,7 @@
 # Modern Lisp (ML): a Lisp-like language with ML semantics, user-definable ADTs, pattern matching, typed macros and delimited control
 
 Had an internship at Ahrefs and loved OCaml.
-```
+```lisp
 (*
    a comment
    (* and just to be sure, this also stays a comment *)
@@ -9,7 +9,7 @@ Had an internship at Ahrefs and loved OCaml.
 
 (* value definition *)
 (let (x 1))
-(let (x (fun -> 1))
+(let (x (fun -> 1)))
 (let (id (fun x -> x)))
 
 (* function definition *)
@@ -22,41 +22,45 @@ Had an internship at Ahrefs and loved OCaml.
 (type (foo int))
 
 (* fun fact, you can stack definitions! *)
-(let (x 1)
-     (y (+ x x))
-     (z (+ y y))
-     (thunk -> z))
+(let
+  (x 1)
+  (y (+ x x))
+  (z (+ y y))
+  (thunk -> z))
 
 (* ditto for types *)
-(type (* ^ represents products *)
-      (unit (^))
-      (pair (^ a b))
-      (* | represents unions *)
-      (peano (|
-             (* BTW we reserve capital letters for constructors *)
-             Z
-             (* keep in mind NOT (Z), thats a thunk *)
-             (* here S is treated as a*)
-             (S [x : peano])))
-      (list a -> (|
-                 Nil
-                 (Cons [x : a] [xs: (list a)])))
-      (bool (|
-            True
-            False)))
+(type
+  (* ^ represents products *)
+  (unit (^))
+  (pair (^ a b))
+  (* | represents unions *)
+  (peano (|
+           (* BTW we reserve capital letters for constructors *)
+           Z
+           (* keep in mind NOT (Z), thats a thunk *)
+           (* here S is treated as a peano -> peano function *)
+           (S [x : peano])))
+  (list a -> (|
+               Nil
+               (Cons [x : a] [xs: (list a)])))
+  (bool (|
+          True
+          False)))
 
 (* letrec exists too *)
-(letrec (even? n -> (match n
-                    (Z -> True)
-                    ((S x) -> (odd? x))))
-        (odd? n -> (match n
-                   (Z -> False)
-                   ((S x) -> (even? x)))))
+(letrec
+  (even? n -> (match n
+                (Z -> True)
+                ((S x) -> (odd? x))))
+  (odd? n -> (match n
+               (Z -> False)
+               ((S x) -> (even? x)))))
 (* wut *)
-(typerec (foo' (Foo [bar : bar']))
-         (* can't forget datum comments too which are #* *)
-         #*(invalid_code)
-         (bar' (Bar [foo : foo'])))
+(typerec
+  (foo' (Foo [bar : bar']))
+  (* can't forget datum comments too which are #* *)
+  #*(invalid_code)
+  (bar' (Bar [foo : foo'])))
 
 (* TODO: mac and macrec *)
 
