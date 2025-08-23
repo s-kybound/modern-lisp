@@ -1,4 +1,4 @@
-# limil: a Lisp-like language with ML semantics, user-definable ADTs, pattern matching, typed macros and delimited control
+# spell: a Lisp-like language with ML semantics, user-definable ADTs, pattern matching, typed macros and delimited control
 
 Had an internship at Ahrefs and loved OCaml.
 ```lisp
