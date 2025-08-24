@@ -13,9 +13,7 @@ Hence I sought a way to unite the two mystical worlds of ML-type and Lisp-type l
 
 (* value definition *)
 (let (x 1))
-(let (x (fun -> 1))) (* TODO: discuss whether (fun -> 1) is valid and produces
-                        a Thunk (nullary function), or force minimum 1-ary
-                        functions with (fun () -> 1) being recommended *)
+(let (x (fun () -> 1)))
 (let (id (fun x -> x)))
 
 (* function definition *)
@@ -32,7 +30,7 @@ Hence I sought a way to unite the two mystical worlds of ML-type and Lisp-type l
   (x 1)
   (y (+ x x))
   (z (+ y y))
-  (thunk -> z))
+  (thunk () -> z))
 
 (* ditto for types *)
 (type
@@ -43,7 +41,6 @@ Hence I sought a way to unite the two mystical worlds of ML-type and Lisp-type l
   (peano (|
            (* BTW we reserve capital letters for constructors *)
            Z
-           (* keep in mind NOT (Z), thats a thunk *)
            (* here S is treated as a peano -> peano function *)
            (S [x : peano])))
   (list a -> (|
@@ -85,9 +82,9 @@ expression: (let (<pattern> <val>)+ => <body> )
 (* unlike most lisps, arithmetic functions such as + are set as 2-ary, with type int -> int -> int *)
 (+ 1 1) (* valid *)
 
-#*(+ 1)
-#*(+)
-#*(+ 1 1 1 1) (* all invalid *)
+#*(+ 1) (* -> (-> int int) *)
+#*(+) (* -> (-> int (-> int int)) *) (* hmm, i suspect this means we also reevaluate that application (<term>) with no arguments is == <term>? ie useless when not given any arguments? *)
+#*(+ 1 1 1 1) (* invalid *)
 
 (* this allows us to use + as a curried function that can be passed to HOFs.
    but if we really want to get the original variadic +, this is where macros come in! *)
