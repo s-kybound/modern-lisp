@@ -1,6 +1,10 @@
-# spell: a Lisp-like language with ML semantics, user-definable ADTs, pattern matching, typed macros and delimited control
+# spelle: a Lisp-like language with ML semantics, user-definable ADTs, pattern matching, typed macros and delimited control
 
-Had an internship at Ahrefs and loved OCaml.
+Had an internship at Ahrefs and loved OCaml for how it structures code and makes it easy for me to make programs
+
+But I like Common Lisp and Scheme too, for their macros and homoiconic syntax. How do?
+
+Hence I sought a way to unite the two mystical worlds of ML-type and Lisp-type languages together, and here we are! A lisp that tastes like ML, but also preserves the ease of macros and homoiconicity.
 ```lisp
 (*
    a comment
@@ -9,7 +13,9 @@ Had an internship at Ahrefs and loved OCaml.
 
 (* value definition *)
 (let (x 1))
-(let (x (fun -> 1)))
+(let (x (fun -> 1))) (* TODO: discuss whether (fun -> 1) is valid and produces
+                        a Thunk (nullary function), or force minimum 1-ary
+                        functions with (fun () -> 1) being recommended *)
 (let (id (fun x -> x)))
 
 (* function definition *)
